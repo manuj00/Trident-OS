@@ -1,0 +1,272 @@
+# Simple x86 Bootloader – Hello World
+
+## Overview
+
+This project implements a **minimal x86 bootloader** written in **16-bit Assembly (NASM)**.
+The bootloader is loaded directly by the system BIOS during startup and prints a message on the screen using BIOS video services.
+
+This program demonstrates fundamental low-level concepts such as:
+
+* BIOS boot process
+* Real Mode execution
+* x86 CPU registers
+* BIOS interrupts
+* Boot sector structure
+* String handling in Assembly
+
+The entire bootloader fits inside a single **512-byte boot sector**.
+
+---
+
+## Boot Process Background
+
+When a computer powers on:
+
+1. The **BIOS (Basic Input/Output System)** initializes hardware.
+2. BIOS reads the **first sector (512 bytes)** from the boot device.
+3. This sector is loaded into memory at address:
+
+```
+0x0000:0x7C00
+```
+
+4. The CPU begins executing instructions from this location.
+
+This bootloader is the program executed at that stage.
+
+---
+
+## Program Functionality
+
+The bootloader performs the following steps:
+
+1. Points to a null-terminated message stored in memory.
+2. Reads the message character by character.
+3. Uses a BIOS interrupt to print each character.
+4. Stops execution in an infinite loop.
+
+---
+
+## Source Code
+
+```asm
+ORG 0x7C00
+BITS 16
+
+start:
+    mov si, message
+    call print
+    jmp $
+
+print:
+    mov bx, 0
+
+.loop:
+    lodsb
+    cmp al, 0
+    je .done
+    call print_char
+    jmp .loop
+
+.done:
+    ret
+
+print_char:
+    mov ah, 0x0E
+    int 0x10
+    ret
+
+message: db 'Hello World This is Group 40 Aman kabir manuj', 0
+
+times 510-($ - $$) db 0
+dw 0xAA55
+```
+
+---
+
+## Code Explanation
+
+### `ORG 0x7C00`
+
+Informs the assembler that the program will be loaded at memory address **0x7C00**, which is where BIOS loads boot sectors.
+
+### `BITS 16`
+
+Specifies that the code runs in **16-bit Real Mode**, the default CPU mode during boot.
+
+---
+
+### Program Entry
+
+```asm
+mov si, message
+call print
+```
+
+* `SI` stores the memory address of the message.
+* The `print` routine is called to display the string.
+
+---
+
+### Infinite Loop
+
+```asm
+jmp $
+```
+
+Prevents execution from continuing into undefined memory after the program finishes.
+
+---
+
+### Print Routine
+
+The `print` function reads characters sequentially from memory.
+
+```asm
+lodsb
+```
+
+* Loads one byte from memory (`DS:SI`) into register `AL`.
+* Automatically increments `SI`.
+
+```asm
+cmp al, 0
+```
+
+Checks for the null terminator marking the end of the string.
+
+---
+
+### Character Output
+
+```asm
+mov ah, 0x0E
+int 0x10
+```
+
+This invokes a **BIOS video interrupt**.
+
+* `INT 0x10` → BIOS video services
+* `AH = 0x0E` → Teletype output function
+* `AL` contains the character to print
+
+The BIOS handles interaction with display hardware.
+
+---
+
+### Video Page Selection
+
+```asm
+mov bx, 0
+```
+
+This sets:
+
+* `BH = 0` → active display page
+* `BL = 0` → color value (unused in text mode)
+
+---
+
+### Message Storage
+
+```asm
+message: db '...', 0
+```
+
+Defines a null-terminated ASCII string.
+
+The terminating `0` signals the end of the message.
+
+---
+
+### Boot Sector Padding
+
+```asm
+times 510-($ - $$) db 0
+```
+
+Pads the program so the total size becomes **510 bytes**.
+
+---
+
+### Boot Signature
+
+```asm
+dw 0xAA55
+```
+
+Required boot signature checked by BIOS.
+Without this value, the disk will not be recognized as bootable.
+
+---
+
+## Memory Layout
+
+```
++----------------------+
+| Bootloader Code      |
+| Message Data         |
+| Padding              |
+| 0xAA55 Signature     |
++----------------------+
+Total Size: 512 Bytes
+```
+
+---
+
+## Build Instructions
+
+### Assemble
+
+```bash
+nasm -f bin boot.asm -o boot.bin
+```
+
+### Run with QEMU
+
+```bash
+qemu-system-x86_64 boot.bin
+```
+
+---
+
+## Concepts Demonstrated
+
+* Bare-metal programming
+* BIOS interrupt usage
+* Register-level programming
+* Boot sector constraints
+* Assembly control flow
+* String processing
+
+---
+
+## Educational Purpose
+
+This project is intended for learning:
+
+* Operating system fundamentals
+* Bootloader development
+* Low-level system architecture
+* x86 Assembly programming
+
+---
+
+## Future Improvements
+
+Possible extensions include:
+
+* Disk sector loading
+* Second-stage bootloader
+* Protected Mode switching
+* Direct VGA memory output
+* Kernel loading
+
+---
+
+## Author
+
+Group 40
+Aman • Kabir • Manuj
+
+---
