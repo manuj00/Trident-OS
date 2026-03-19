@@ -68,3 +68,72 @@ flowchart TD
     C --> C2[Interrupt Handling]
     D --> D1[Keyboard Driver]
     D --> D2[VGA Driver]
+
+🛠️ Setup & Run
+🔧 Prerequisites
+
+nasm
+
+i686-elf-gcc
+
+qemu-system-x86
+
+gdb (optional)
+
+🧱 Build
+chmod +x build.sh
+./build.sh
+▶️ Run
+qemu-system-x86_64 -hda ./bin/os.bin
+🐞 Debug
+qemu-system-x86_64 -hda ./bin/os.bin -S -gdb stdio
+🧪 Sample Output
+🔱 Trident OS Booted Successfully!
+
+[ OK ] GDT Loaded
+[ OK ] IDT Initialized
+[ OK ] Keyboard Driver Loaded
+[ OK ] VGA Driver Initialized
+
+Welcome to Trident Shell
+> _
+🔌 Device Drivers
+🖮 Keyboard Driver
+
+IRQ1 interrupt-based input
+
+Reads from port 0x60
+
+Scancode → ASCII conversion
+
+Feeds shell input
+
+🖥️ VGA Driver
+
+Direct memory access at 0xB8000
+
+Handles text rendering
+
+Cursor control
+
+💡 Future Enhancements
+
+Paging & Virtual Memory
+
+Multitasking Scheduler
+
+User Mode vs Kernel Mode
+
+Disk Drivers (ATA)
+
+File System (FAT16 full support)
+
+Networking Stack
+
+ELF Loader
+
+🧑‍💻 Author
+
+Manuj Pant
+Aspiring DevOps Engineer
+🔗 https://github.com/manuj00
