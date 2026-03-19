@@ -20,7 +20,7 @@ This project implements:
 - Bootloader → Kernel pipeline  
 - Protected Mode transition  
 - Interrupt handling (IDT)  
-- **Device Drivers (Keyboard & VGA)**  
+- Device Drivers (Keyboard & VGA)  
 - Basic shell interaction  
 
 ---
@@ -54,16 +54,36 @@ This project implements:
 
 ## 🏗️ System Architecture  
 
-```mermaid
-flowchart TD
-    A[User Input] --> B[Shell]
-    B --> C[Kernel]
+User Input → Shell → Kernel → Device Drivers → Hardware  
 
-    C --> C1[Memory Mgmt]
-    C --> C2[Interrupt Handling]
+- Kernel handles memory and interrupts  
+- Drivers interact directly with hardware  
 
-    C --> D[Device Drivers]
-    D --> D1[Keyboard Driver]
-    D --> D2[VGA Driver]
+---
 
-    D --> E[Hardware]
+## 📂 Project Structure  
+
+```bash
+Trident-OS/
+│
+├── src/
+│   ├── boot/
+│   │   └── boot.asm
+│   │
+│   ├── kernel/
+│   │   ├── kernel.c
+│   │   ├── idt.c
+│   │   ├── memory.c
+│   │
+│   ├── drivers/
+│   │   ├── keyboard.c
+│   │   ├── vga.c
+│   │
+│   ├── shell/
+│   │   └── shell.c
+│   │
+│   └── include/
+│
+├── build/
+├── bin/
+└── build.sh
