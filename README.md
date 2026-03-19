@@ -1,184 +1,70 @@
-🔱 Trident OS 
+<p align="center">
+  <h1 align="center">🔱 Trident OS</h1>
+  <p align="center"><i>A Minimal 32-bit Operating System built from scratch</i></p>
+</p>
 
-A Minimal 32-bit Operating System built from scratch
+<p align="center">
+  <img src="https://img.shields.io/badge/Architecture-x86-8A2BE2?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Language-C%20%7C%20Assembly-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Bootloader-Custom-important?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Mode-Protected%20Mode-success?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Emulator-QEMU-orange?style=for-the-badge"/>
+</p>
 
-📌 Overview
+---
 
-Trident OS is a custom-built 32-bit operating system developed from scratch using x86 Assembly and C. The project demonstrates low-level system design concepts including bootloading, memory management, protected mode, and direct hardware interaction.
+## 📌 Overview  
 
-This project is designed to bridge the gap between theoretical OS concepts and real-world system-level implementation.
+**Trident OS** is a fully custom-built **32-bit operating system** developed using **x86 Assembly and C**, focused on deep system-level understanding.
 
-🚀 Features
+Unlike basic OS demos, this project implements:
+- 🔹 Bootloader → Kernel pipeline  
+- 🔹 Protected Mode transition  
+- 🔹 Interrupt handling  
+- 🔹 **Device Drivers (Keyboard & VGA)**  
+- 🔹 Shell interaction  
 
-🔹 Custom Bootloader (512 bytes, BIOS-based)
+This project reflects **real OS architecture concepts used in Linux and modern kernels**.
 
-🔹 Transition from Real Mode → Protected Mode
+---
 
-🔹 Global Descriptor Table (GDT) implementation
+## 🚀 Features  
 
-🔹 Basic Kernel written in C
+✔ Custom BIOS Bootloader (512 bytes)  
+✔ Real Mode → Protected Mode transition  
+✔ Global Descriptor Table (GDT)  
+✔ Interrupt Descriptor Table (IDT)  
+✔ Kernel written in C  
+✔ VGA Text Mode Driver  
+✔ Keyboard Driver (IRQ-based)  
+✔ Basic Shell Interface  
+✔ Modular architecture  
 
-🔹 Direct VGA text buffer output
+---
 
-🔹 Interrupt Descriptor Table (IDT)
+## 🧠 Core Concepts Implemented  
 
-🔹 Keyboard input handling
+| Domain | Concepts |
+|------|--------|
+| Booting | BIOS, MBR, Bootloader |
+| CPU Modes | Real Mode, Protected Mode |
+| Memory | Segmentation (GDT) |
+| Interrupts | IDT, ISR, IRQ |
+| Drivers | Keyboard, VGA |
+| Kernel | Low-level C + Assembly |
 
-🔹 Basic shell with custom commands
+---
 
-🔹 Memory management (paging - optional/partial if implemented)
+## 🏗️ System Architecture  
 
-🔹 FAT16 file system support (if implemented)
+```mermaid
+flowchart TD
+    A[User Input] --> B[Shell]
+    B --> C[Kernel]
+    C --> D[Device Drivers]
+    D --> E[Hardware]
 
-🔹 Modular and extensible architecture
-
-🧠 What You Learn
-
-This project helps you deeply understand:
-
-How a computer boots from power-on
-
-BIOS and boot sector execution
-
-Memory segmentation and addressing
-
-Switching to Protected Mode (32-bit)
-
-Low-level hardware communication
-
-Interrupt handling and system calls
-
-Kernel design fundamentals
-
-File system basics (FAT16)
-
-🏗️ Architecture
-+----------------------+
-|      User Input      |
-+----------+-----------+
-           |
-           v
-+----------------------+
-|       Shell          |
-+----------+-----------+
-           |
-           v
-+----------------------+
-|       Kernel         |
-|  - Memory Mgmt       |
-|  - Interrupts        |
-|  - Drivers           |
-+----------+-----------+
-           |
-           v
-+----------------------+
-|     Hardware         |
-+----------------------+
-⚙️ Tech Stack
-
-Language: C, x86 Assembly
-
-Compiler: i686-elf-gcc (cross compiler)
-
-Assembler: NASM
-
-Emulator: QEMU
-
-Debugger: GDB
-
-Build System: Bash scripts / Makefile
-
-📂 Project Structure
-Trident-OS/
-│
-├── src/
-│   ├── boot/
-│   │   └── boot.asm        # Bootloader (512 bytes)
-│   ├── kernel/
-│   │   ├── kernel.c        # Main kernel logic
-│   │   ├── terminal.c      # VGA output
-│   │   ├── idt.c           # Interrupt handling
-│   │   └── memory.c        # Memory management
-│   ├── include/
-│   │   └── kernel.h
-│
-├── build/                  # Object files
-├── bin/                    # Final OS image
-├── scripts/
-│   └── build.sh
-│
-└── README.md
-🛠️ Build & Run
-🔧 Prerequisites
-
-Make sure you have:
-
-nasm
-
-i686-elf-gcc (cross compiler)
-
-qemu-system-x86
-
-gdb (optional)
-
-🧱 Build the OS
-chmod +x build.sh
-./build.sh
-▶️ Run in QEMU
-qemu-system-x86_64 -hda ./bin/os.bin
-🐞 Debug (Optional)
-qemu-system-x86_64 -hda ./bin/os.bin -S -gdb stdio
-
-Then in another terminal:
-
-gdb
-target remote | qemu-system-x86_64 -hda ./bin/os.bin -gdb stdio -S
-🧪 Example Output
-Trident OS Booted Successfully!
-Welcome to Trident Shell
-> _
-🔥 Custom Shell Commands (Example)
-Command	Description
-help	Show available commands
-clear	Clear screen
-echo	Print text
-info	Display system info
-💡 Future Improvements
-
-Full paging implementation
-
-Multitasking / scheduling
-
-File system write support
-
-User mode vs kernel mode
-
-Networking stack
-
-ELF executable loader
-
-GUI support
-
-📚 Key Concepts Implemented
-
-Boot Sector (MBR)
-
-Segmentation (GDT)
-
-Interrupt Handling (IDT)
-
-Hardware I/O (Ports)
-
-Memory Management
-
-Low-level Debugging (GDB + QEMU)
-
-👨‍💻 Author
-
-Manuj Pant
-
-Aspiring DevOps Engineer
-
-Passionate about Linux, Systems, and Low-Level Programming
-
-GitHub: https://github.com/manuj00
+    C --> C1[Memory Mgmt]
+    C --> C2[Interrupt Handling]
+    D --> D1[Keyboard Driver]
+    D --> D2[VGA Driver]
