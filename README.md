@@ -69,3 +69,20 @@ flowchart TD
     C --> C2[Interrupt Handling]
     D --> D1[Keyboard Driver]
     D --> D2[VGA Driver]
+
+## 🛠️ Setup & Run  
+
+### 🔧 Prerequisites  
+
+- nasm  
+- i686-elf-gcc  
+- qemu-system-x86  
+- gdb (optional)  
+
+---
+
+### 🧱 Build  
+
+```bash
+chmod +x build.sh
+./build.sh
