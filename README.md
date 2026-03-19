@@ -25,8 +25,6 @@ This project implements:
 - **Device Drivers (Keyboard & VGA)**  
 - Basic shell interaction  
 
-It reflects real-world OS design concepts used in modern systems.
-
 ---
 
 ## 🚀 Features  
@@ -62,27 +60,12 @@ It reflects real-world OS design concepts used in modern systems.
 flowchart TD
     A[User Input] --> B[Shell]
     B --> C[Kernel]
-    C --> D[Device Drivers]
-    D --> E[Hardware]
 
     C --> C1[Memory Mgmt]
     C --> C2[Interrupt Handling]
+
+    C --> D[Device Drivers]
     D --> D1[Keyboard Driver]
     D --> D2[VGA Driver]
 
-## 🛠️ Setup & Run  
-
-### 🔧 Prerequisites  
-
-- nasm  
-- i686-elf-gcc  
-- qemu-system-x86  
-- gdb (optional)  
-
----
-
-### 🧱 Build  
-
-```bash
-chmod +x build.sh
-./build.sh
+    D --> E[Hardware]
