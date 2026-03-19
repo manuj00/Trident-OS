@@ -54,36 +54,16 @@ This project implements:
 
 ## 🏗️ System Architecture  
 
-User Input → Shell → Kernel → Device Drivers → Hardware  
+```mermaid
+flowchart TD
+    A[User Input] --> B[Shell]
+    B --> C[Kernel]
 
-- Kernel handles memory and interrupts  
-- Drivers interact directly with hardware  
+    C --> C1[Memory Mgmt]
+    C --> C2[Interrupt Handling]
 
----
+    C --> D[Device Drivers]
+    D --> D1[Keyboard Driver]
+    D --> D2[VGA Driver]
 
-## 📂 Project Structure  
-
-```bash
-Trident-OS/
-│
-├── src/
-│   ├── boot/
-│   │   └── boot.asm
-│   │
-│   ├── kernel/
-│   │   ├── kernel.c
-│   │   ├── idt.c
-│   │   ├── memory.c
-│   │
-│   ├── drivers/
-│   │   ├── keyboard.c
-│   │   ├── vga.c
-│   │
-│   ├── shell/
-│   │   └── shell.c
-│   │
-│   └── include/
-│
-├── build/
-├── bin/
-└── build.sh
+    D --> E[Hardware]
